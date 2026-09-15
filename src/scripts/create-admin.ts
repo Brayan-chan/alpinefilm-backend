@@ -1,0 +1,2 @@
+import crypto from 'node:crypto'; import { db } from '../db.js'; import { hashPassword } from '../security.js';
+const [username,password,displayName=username]=process.argv.slice(2);if(!username||!password||password.length<8){console.error('Uso: npm run admin:create -- usuario contraseña "Nombre"');process.exit(1);}const hash=await hashPassword(password);db.prepare('INSERT INTO users VALUES(?,?,?,?,?,?,?)').run(crypto.randomUUID(),username,displayName,hash,'admin',1,new Date().toISOString());console.log(`Administrador ${username} creado.`);

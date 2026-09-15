@@ -1,0 +1,13 @@
+#!/sbin/openrc-run
+name="AlpineFilm API"
+description="Servidor privado de streaming AlpineFilm"
+command="/usr/bin/node"
+command_args="/opt/alpinefilm/backend/dist/src/server.js"
+command_user="alpinefilm:alpinefilm"
+directory="/opt/alpinefilm/backend"
+output_log="/var/log/alpinefilm.log"
+error_log="/var/log/alpinefilm.err"
+supervisor="supervise-daemon"
+respawn_delay=5
+respawn_max=5
+depend() { need net; after tailscale; }
