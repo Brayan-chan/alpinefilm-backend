@@ -1,7 +1,8 @@
 #!/bin/sh
 set -eu
 [ "$(id -u)" -eq 0 ] || { echo "Ejecuta como root"; exit 1; }
-id alpinefilm >/dev/null 2>&1 || adduser -S -D -H -s /sbin/nologin alpinefilm
+getent group alpinefilm >/dev/null 2>&1 || addgroup -S alpinefilm
+id -u alpinefilm >/dev/null 2>&1 || adduser -S -D -H -s /sbin/nologin -G alpinefilm alpinefilm
 for dir in /srv/alpinefilm/videos /srv/alpinefilm/posters /srv/alpinefilm/subtitles /srv/alpinefilm/uploads /srv/alpinefilm/database /srv/alpinefilm/backups; do mkdir -p "$dir"; done
 chown -R alpinefilm:alpinefilm /srv/alpinefilm /opt/alpinefilm/backend
 chmod 750 /srv/alpinefilm
